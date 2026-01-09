@@ -1,0 +1,54 @@
+{
+	"name": "ctfd-mcp-server",
+	"version": "1.0.0",
+	"description": "Model Context Protocol (MCP) server for interacting with CTFd instances - authenticate, retrieve challenges, submit flags",
+	"type": "module",
+	"bin": {
+		"ctfd-mcp-server": "./build/index.js"
+	},
+	"files": [
+		"build",
+		"README.md"
+	],
+	"scripts": {
+		"build": "tsc && node -e \"require('fs').chmodSync('build/index.js', 0o755)\"",
+		"start": "node build/index.js",
+		"watch": "tsc --watch",
+		"prepublishOnly": "npm run build",
+		"typecheck": "tsc --noEmit",
+		"lint": "echo 'No linter configured'",
+		"test": "echo 'No tests configured' && exit 0"
+	},
+	"keywords": [
+		"mcp",
+		"model-context-protocol",
+		"ctfd",
+		"ctf",
+		"capture-the-flag",
+		"security",
+		"ai",
+		"llm",
+		"claude"
+	],
+	"author": "",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/tomek7667/ctfd-mcp-server.git"
+	},
+	"bugs": {
+		"url": "https://github.com/tomek7667/ctfd-mcp-server/issues"
+	},
+	"homepage": "https://github.com/tomek7667/ctfd-mcp-server#readme",
+	"engines": {
+		"node": ">=18.0.0"
+	},
+	"dependencies": {
+		"@modelcontextprotocol/sdk": "^1.25.1",
+		"zod": "^4.3.5"
+	},
+	"devDependencies": {
+		"typescript": "^5.7.2",
+		"@types/node": "^25.0.3"
+	}
+}

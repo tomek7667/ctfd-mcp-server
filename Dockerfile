@@ -1,10 +1,24 @@
-FROM python:3.11-slim
+FROM node:20-alpine AS builder
 
 WORKDIR /app
-COPY requirements.txt /app/
-RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . /app
-ENV PYTHONPATH=/app
+COPY package*.json ./
+RUN npm ci
 
-CMD ["uvicorn", "server.main:app", "--host", "0.0.0.0", "--port", "9999"]
+COPY tsconfig.json ./
+COPY src ./src
+
+RUN npm run build
+
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci --omit=dev
+
+COPY --from=builder /app/build ./build
+
+USER node
+
+ENTRYPOINT ["node", "build/index.js"]
