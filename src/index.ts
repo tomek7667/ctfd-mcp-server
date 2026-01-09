@@ -272,9 +272,21 @@ async function getUserProgress(): Promise<any> {
 }
 
 async function healthCheck(): Promise<any> {
+	const headers: Record<string, string> = {
+		"User-Agent": "ctfd-mcp-server/1.0.0",
+	};
+
+	if (state.token) {
+		headers["Authorization"] = `Token ${state.token}`;
+	}
+	if (state.cookie) {
+		headers["Cookie"] = state.cookie;
+	}
+
 	try {
 		const response = await fetch(`${state.baseUrl}/api/v1/challenges`, {
 			method: "HEAD",
+			headers,
 		});
 
 		return {
