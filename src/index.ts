@@ -7,7 +7,7 @@ import { z } from "zod";
 // State management
 interface State {
 	baseUrl: string;
-	token: string | null;
+	token?: string;
 	cookie: string | null;
 	username: string | null;
 	password: string | null;
@@ -16,7 +16,7 @@ interface State {
 
 const state: State = {
 	baseUrl: process.env.BASE_URL || "https://demo.ctfd.io",
-	token: null,
+	token: process.env.CTFD_TOKEN,
 	cookie: null,
 	username: null,
 	password: null,
@@ -318,7 +318,10 @@ server.registerTool(
 	{
 		description: "Set the base URL for the CTFd instance.",
 		inputSchema: {
-			url: z.string().url().describe("CTFd instance base URL (e.g., https://demo.ctfd.io)"),
+			url: z
+				.string()
+				.url()
+				.describe("CTFd instance base URL (e.g., https://demo.ctfd.io)"),
 		},
 	},
 	async ({ url }) => {
@@ -327,7 +330,11 @@ server.registerTool(
 			content: [
 				{
 					type: "text",
-					text: JSON.stringify({ status: "ok", baseUrl: state.baseUrl }, null, 2),
+					text: JSON.stringify(
+						{ status: "ok", baseUrl: state.baseUrl },
+						null,
+						2
+					),
 				},
 			],
 		};
@@ -401,7 +408,8 @@ server.registerTool(
 server.registerTool(
 	"challenges",
 	{
-		description: "List all challenges from CTFd, with optional category filter.",
+		description:
+			"List all challenges from CTFd, with optional category filter.",
 		inputSchema: {
 			category: z
 				.string()
@@ -425,12 +433,9 @@ server.registerTool(
 server.registerTool(
 	"challenge",
 	{
-		description:
-			"Get details for a specific challenge by name or ID.",
+		description: "Get details for a specific challenge by name or ID.",
 		inputSchema: {
-			identifier: z
-				.string()
-				.describe("Challenge name or numeric ID"),
+			identifier: z.string().describe("Challenge name or numeric ID"),
 		},
 	},
 	async ({ identifier }) => {

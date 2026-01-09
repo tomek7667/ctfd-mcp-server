@@ -84,7 +84,8 @@ Claude Desktop supports MCP servers via a JSON configuration file.
 			"command": "npx",
 			"args": ["-y", "ctfd-mcp-server"],
 			"env": {
-				"BASE_URL": "https://demo.ctfd.io"
+				"BASE_URL": "https://demo.ctfd.io",
+				"CTFD_TOKEN": "<your ctfd api token>"
 			}
 		}
 	}
@@ -99,7 +100,8 @@ Claude Desktop supports MCP servers via a JSON configuration file.
 		"ctfd": {
 			"command": "ctfd-mcp-server",
 			"env": {
-				"BASE_URL": "https://demo.ctfd.io"
+				"BASE_URL": "https://demo.ctfd.io",
+				"CTFD_TOKEN": "<your ctfd api token>"
 			}
 		}
 	}
@@ -129,6 +131,7 @@ args = ["-y", "ctfd-mcp-server"]
 
 [mcp_servers.ctfd.env]
 BASE_URL = "https://demo.ctfd.io"
+CTFD_TOKEN = "<your ctfd api token>"
 ```
 
 Use `/mcp` in the Codex TUI to verify the server is connected.
@@ -154,7 +157,8 @@ Amp supports MCP servers via the `amp.mcpServers` setting in VS Code `settings.j
 			"command": "npx",
 			"args": ["-y", "ctfd-mcp-server"],
 			"env": {
-				"BASE_URL": "https://demo.ctfd.io"
+				"BASE_URL": "https://demo.ctfd.io",
+				"CTFD_TOKEN": "<your ctfd api token>"
 			}
 		}
 	}
@@ -182,7 +186,8 @@ Gemini CLI stores MCP configuration in `~/.gemini/settings.json`.
 			"command": "npx",
 			"args": ["-y", "ctfd-mcp-server"],
 			"env": {
-				"BASE_URL": "https://demo.ctfd.io"
+				"BASE_URL": "https://demo.ctfd.io",
+				"CTFD_TOKEN": "<your ctfd api token>"
 			}
 		}
 	}
