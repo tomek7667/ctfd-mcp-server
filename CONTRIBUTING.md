@@ -7,8 +7,8 @@ Thanks for your interest in contributing to ctfd-mcp-server!
 ```bash
 git clone https://github.com/tomek7667/ctfd-mcp-server.git
 cd ctfd-mcp-server
-npm install
-npm run build
+pnpm install
+pnpm run build
 ```
 
 ## Making Changes
@@ -18,9 +18,9 @@ npm run build
 3. Make your changes
 4. Run checks:
    ```bash
-   npm run typecheck
-   npm run build
-   npm test
+   pnpm run typecheck
+   pnpm run build
+   pnpm test
    ```
 5. Commit your changes (`git commit -m 'Add my feature'`)
 6. Push to your fork (`git push origin feature/my-feature`)

@@ -33,7 +33,7 @@ npx ctfd-mcp-server
 ### Option 2: Global install
 
 ```bash
-npm install -g ctfd-mcp-server
+pnpm install -g ctfd-mcp-server
 ctfd-mcp-server
 ```
 
@@ -42,25 +42,25 @@ ctfd-mcp-server
 ```bash
 git clone https://github.com/tomek7667/ctfd-mcp-server.git
 cd ctfd-mcp-server
-npm install
-npm run build
-npm start
+pnpm install
+pnpm run build
+pnpm start
 ```
 
 ## Tools
 
-| Tool | Description |
-| ---- | ----------- |
-| `set_base_url(url)` | Set the base URL for the CTFd instance |
-| `set_token(token)` | Set authentication token |
-| `set_cookie(cookie)` | Set session cookie |
-| `login(username, password)` | Login with credentials |
-| `challenges(category?)` | List challenges, optionally filtered by category |
-| `challenge(identifier)` | Get challenge details by name or ID |
-| `submit_flag(challenge_name?, challenge_id?, flag)` | Submit a flag |
-| `scoreboard()` | Get the CTFd scoreboard |
-| `progress()` | Get current user's progress |
-| `health()` | Check connection health |
+| Tool                                                | Description                                      |
+| --------------------------------------------------- | ------------------------------------------------ |
+| `set_base_url(url)`                                 | Set the base URL for the CTFd instance           |
+| `set_token(token)`                                  | Set authentication token                         |
+| `set_cookie(cookie)`                                | Set session cookie                               |
+| `login(username, password)`                         | Login with credentials                           |
+| `challenges(category?)`                             | List challenges, optionally filtered by category |
+| `challenge(identifier)`                             | Get challenge details by name or ID              |
+| `submit_flag(challenge_name?, challenge_id?, flag)` | Submit a flag                                    |
+| `scoreboard()`                                      | Get the CTFd scoreboard                          |
+| `progress()`                                        | Get current user's progress                      |
+| `health()`                                          | Check connection health                          |
 
 ---
 
@@ -223,27 +223,27 @@ For clients that support Docker-based MCP servers:
 
 ## Compatibility
 
-| Feature | Supported |
-| ------- | --------- |
-| Transport | stdio |
-| Node.js | >=18.0.0 |
+| Feature   | Supported             |
+| --------- | --------------------- |
+| Transport | stdio                 |
+| Node.js   | >=18.0.0              |
 | Platforms | macOS, Linux, Windows |
 
 ### Tested Clients
 
-| Client | Status |
-| ------ | ------ |
-| Claude Desktop | ✅ Verified |
+| Client           | Status      |
+| ---------------- | ----------- |
+| Claude Desktop   | ✅ Verified |
 | OpenAI Codex CLI | ✅ Verified |
-| Amp | ✅ Verified |
-| Gemini CLI | ✅ Verified |
+| Amp              | ✅ Verified |
+| Gemini CLI       | ✅ Verified |
 
 ---
 
 ## Environment Variables
 
-| Variable | Description | Default |
-| -------- | ----------- | ------- |
+| Variable   | Description            | Default                |
+| ---------- | ---------------------- | ---------------------- |
 | `BASE_URL` | CTFd instance base URL | `https://demo.ctfd.io` |
 
 ---
@@ -254,16 +254,16 @@ For clients that support Docker-based MCP servers:
 # Clone and install
 git clone https://github.com/tomek7667/ctfd-mcp-server.git
 cd ctfd-mcp-server
-npm install
+pnpm install
 
 # Build
-npm run build
+pnpm run build
 
 # Run
-npm start
+pnpm start
 
 # Watch mode (auto-rebuild)
-npm run watch
+pnpm run watch
 ```
 
 ---
@@ -276,5 +276,3 @@ Community contributions and improvements are always welcome.
 ## License
 
 [MIT](https://github.com/tomek7667/ctfd-mcp-server/blob/main/LICENSE)
-
-
