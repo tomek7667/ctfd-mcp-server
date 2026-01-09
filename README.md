@@ -1,15 +1,16 @@
 # CTFd MCP Server
 
+[![npm version](https://img.shields.io/npm/v/ctfd-mcp-server.svg)](https://www.npmjs.com/package/ctfd-mcp-server) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A lightweight and extensible Model Context Protocol (MCP) server for interacting with any CTFd instance.
-This project enables AI tools and automation to authenticate, retrieve challenges, and submit flags through a stable API layer.
+This project enables AI tools and automation to authenticate, retrieve challenges, and submit flags through MCP tools.
+
 ## Overview
+
 This project acts as a bridge between CTFd and AI-driven systems by providing a unified interface.
-It supports multiple authentication modes, dynamic base URL control, and FastAPI endpoints for debugging and integration.
+It supports multiple authentication modes, dynamic base URL control, and direct MCP tool integration.
 
 The server is validated using the official demo instance at https://demo.ctfd.io.
-
-
-
 
 ## Features
 
@@ -18,120 +19,262 @@ The server is validated using the official demo instance at https://demo.ctfd.io
 - Username/password login
 - List challenges with optional filtering
 - Submit flags programmatically
-- Compatible with MCP-based AI tools
-- Clean and extensible Python codebase
+- Compatible with MCP-based AI tools (Claude, Codex, Amp, Gemini)
+- Clean and extensible TypeScript codebase
 
-## Installation
+## Quickstart
 
-Install the MCP server using Python:
+### Option 1: npx (no install)
+
 ```bash
-git clone https://github.com/YourUser/ctfd-mcp-server.git
+npx ctfd-mcp-server
+```
+
+### Option 2: Global install
+
+```bash
+npm install -g ctfd-mcp-server
+ctfd-mcp-server
+```
+
+### Option 3: From source
+
+```bash
+git clone https://github.com/tomek7667/ctfd-mcp-server.git
 cd ctfd-mcp-server
-pip install -r requirements.txt
-```
-Create your environment configuration:
-
-```bash
-cp .env.example .env
-
-```
-Edit .env as needed:
-
-```bash
-BASE_URL=https://demo.ctfd.id
-CTFD_TOKEN=
-CTFD_COOKIE=
+npm install
+npm run build
+npm start
 ```
 
+## Tools
 
-    
-## Running the MCP Server
+| Tool | Description |
+| ---- | ----------- |
+| `set_base_url(url)` | Set the base URL for the CTFd instance |
+| `set_token(token)` | Set authentication token |
+| `set_cookie(cookie)` | Set session cookie |
+| `login(username, password)` | Login with credentials |
+| `challenges(category?)` | List challenges, optionally filtered by category |
+| `challenge(identifier)` | Get challenge details by name or ID |
+| `submit_flag(challenge_name?, challenge_id?, flag)` | Submit a flag |
+| `scoreboard()` | Get the CTFd scoreboard |
+| `progress()` | Get current user's progress |
+| `health()` | Check connection health |
 
-Start the server with Python:
-```bash
-python mcp_server.py
-```
-The default FastAPI server runs at:
-```bash
-http://127.0.0.1:8000
-```
+---
 
-    
-## Example MCP Configuration
+## Client Setup
 
-If you are using a client such as Claude Desktop or a compatible MCP host, configure it as follows:
-```javascript
+### Claude Desktop
+
+Claude Desktop supports MCP servers via a JSON configuration file.
+
+**Config file location:**
+
+- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+
+**Using npx (recommended):**
+
+```json
 {
-  "mcpServers": {
-    "ctfd-mcp": {
-      "command": "python",
-      "args": ["mcp_server.py"],
-      "env": {
-        "BASE_URL": "https://demo.ctfd.io"
-      }
-    }
-  }
-}
-
-```
-
-    
-## Usage/Examples
-Set Token
-```javascript
-{
-  "method": "set_token",
-  "params": { "token": "your_token_here" }
+	"mcpServers": {
+		"ctfd": {
+			"command": "npx",
+			"args": ["-y", "ctfd-mcp-server"],
+			"env": {
+				"BASE_URL": "https://demo.ctfd.io"
+			}
+		}
+	}
 }
 ```
-Get Challanges
-```javascript
+
+**Using global install:**
+
+```json
 {
-  "method": "challenges",
-  "params": {}
+	"mcpServers": {
+		"ctfd": {
+			"command": "ctfd-mcp-server",
+			"env": {
+				"BASE_URL": "https://demo.ctfd.io"
+			}
+		}
+	}
 }
 ```
-Sumbit Flag
-```javascript
-{
-  "method": "submit_flag",
-  "params": {
-    "challenge_id": 3,
-    "flag": "flag{example_payload}"
-  }
-}
 
+Restart Claude Desktop after editing the config.
+
+---
+
+### OpenAI Codex CLI
+
+Codex CLI stores MCP configuration in `~/.codex/config.toml`.
+
+**Using the CLI:**
+
+```bash
+codex mcp add ctfd -- npx -y ctfd-mcp-server
 ```
 
+**Or edit `~/.codex/config.toml` directly:**
 
+```toml
+[mcp_servers.ctfd]
+command = "npx"
+args = ["-y", "ctfd-mcp-server"]
 
+[mcp_servers.ctfd.env]
+BASE_URL = "https://demo.ctfd.io"
+```
 
+Use `/mcp` in the Codex TUI to verify the server is connected.
 
-## API Endpoints (FastAPI)
+---
 
-| Method | Path               | Description              |
-| ------ | ------------------ | ------------------------ |
-| POST   | /set_token         | Set authentication token |
-| POST   | /set_cookie        | Set session cookie       |
-| POST   | /login             | Login with credentials   |
-| GET    | /api/v1/challenges | Retrieve challenges      |
-| POST   | /api/v1/flags      | Submit a flag            |
+### Amp
 
+Amp supports MCP servers via the `amp.mcpServers` setting in VS Code `settings.json`.
 
+**Config file location (VS Code):**
 
+- **macOS**: `~/Library/Application Support/Code/User/settings.json`
+- **Windows**: `%APPDATA%\Code\User\settings.json`
+- **Linux**: `~/.config/Code/User/settings.json`
 
+**Using npx (recommended):**
 
+```json
+{
+	"amp.mcpServers": {
+		"ctfd": {
+			"command": "npx",
+			"args": ["-y", "ctfd-mcp-server"],
+			"env": {
+				"BASE_URL": "https://demo.ctfd.io"
+			}
+		}
+	}
+}
+```
 
+**Via CLI:**
 
+```bash
+amp mcp add ctfd npx -y ctfd-mcp-server
+```
 
+---
+
+### Gemini CLI
+
+Gemini CLI stores MCP configuration in `~/.gemini/settings.json`.
+
+**Using npx (recommended):**
+
+```json
+{
+	"mcpServers": {
+		"ctfd": {
+			"command": "npx",
+			"args": ["-y", "ctfd-mcp-server"],
+			"env": {
+				"BASE_URL": "https://demo.ctfd.io"
+			}
+		}
+	}
+}
+```
+
+**Via CLI:**
+
+```bash
+gemini mcp add ctfd npx -- -y ctfd-mcp-server
+```
+
+Use `/mcp` in Gemini CLI to verify server status.
+
+---
+
+## Docker
+
+```bash
+docker build -t ctfd-mcp-server .
+docker run -i ctfd-mcp-server
+```
+
+For clients that support Docker-based MCP servers:
+
+```json
+{
+	"mcpServers": {
+		"ctfd": {
+			"command": "docker",
+			"args": ["run", "-i", "--rm", "ctfd-mcp-server"]
+		}
+	}
+}
+```
+
+---
+
+## Compatibility
+
+| Feature | Supported |
+| ------- | --------- |
+| Transport | stdio |
+| Node.js | >=18.0.0 |
+| Platforms | macOS, Linux, Windows |
+
+### Tested Clients
+
+| Client | Status |
+| ------ | ------ |
+| Claude Desktop | ✅ Verified |
+| OpenAI Codex CLI | ✅ Verified |
+| Amp | ✅ Verified |
+| Gemini CLI | ✅ Verified |
+
+---
+
+## Environment Variables
+
+| Variable | Description | Default |
+| -------- | ----------- | ------- |
+| `BASE_URL` | CTFd instance base URL | `https://demo.ctfd.io` |
+
+---
+
+## Development
+
+```bash
+# Clone and install
+git clone https://github.com/tomek7667/ctfd-mcp-server.git
+cd ctfd-mcp-server
+npm install
+
+# Build
+npm run build
+
+# Run
+npm start
+
+# Watch mode (auto-rebuild)
+npm run watch
+```
+
+---
 
 ## Support
 
-For support, email jamescotid@gmail.com
- or open an issue through the GitHub repository.
+For support, email jamescotid@gmail.com or open an issue through the GitHub repository.
 Community contributions and improvements are always welcome.
 
 ## License
 
-[MIT](https://github.com/MrJamescot/ctfd-mcp-server/blob/main/LICENSE)
+[MIT](https://github.com/tomek7667/ctfd-mcp-server/blob/main/LICENSE)
+
 
