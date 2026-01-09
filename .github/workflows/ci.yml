@@ -43,7 +43,10 @@ jobs:
 
       - name: Smoke test
         run: |
-          timeout 5 node build/index.js || code=$?
+          set +e
+          timeout 5 node build/index.js
+          code=$?
+          set -e
           if [ "$code" = "124" ]; then
             echo "Server started successfully (killed after timeout)"
             exit 0
