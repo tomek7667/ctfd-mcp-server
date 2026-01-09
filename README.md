@@ -25,7 +25,7 @@ The server is validated using the official demo instance at https://demo.ctfd.io
 
 Install the MCP server using Python:
 ```bash
-git clone https://github.com/YourUser/ctfd-mcp-server.git
+git clone https://github.com/MrJamescot/ctfd-mcp-server.git
 cd ctfd-mcp-server
 pip install -r requirements.txt
 ```
@@ -134,4 +134,5 @@ Community contributions and improvements are always welcome.
 ## License
 
 [MIT](https://github.com/MrJamescot/ctfd-mcp-server/blob/main/LICENSE)
+
 
