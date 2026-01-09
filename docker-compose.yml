@@ -2,11 +2,7 @@ version: "3.8"
 services:
   ctfd-mcp:
     build: .
-    ports:
-      - "9999:9999"
+    stdin_open: true
     environment:
-      - CTFD_BASE_URL=${CTFD_BASE_URL}
-      - CTFD_ADMIN_TOKEN=${CTFD_ADMIN_TOKEN}
-      - FILE_CACHE_DIR=/data/file_cache
-    volumes:
-      - ./file_cache:/data/file_cache
+      - BASE_URL=${BASE_URL:-https://demo.ctfd.io}
+

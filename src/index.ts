@@ -28,11 +28,16 @@ async function fetchJson<T>(
 	url: string,
 	options: RequestInit = {}
 ): Promise<T> {
-	const headers: HeadersInit = {
+	const headers: Record<string, string> = {
 		"Content-Type": "application/json",
 		"User-Agent": "ctfd-mcp-server/1.0.0",
-		...options.headers,
 	};
+
+	// Merge with any existing headers
+	if (options.headers) {
+		const existingHeaders = options.headers as Record<string, string>;
+		Object.assign(headers, existingHeaders);
+	}
 
 	if (state.token) {
 		headers["Authorization"] = `Token ${state.token}`;
